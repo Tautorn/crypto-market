@@ -1,0 +1,31 @@
+CREATE TYPE OPERATION AS ENUM ('buy', 'sell');
+
+CREATE TABLE IF NOT EXISTS coins (
+  id VARCHAR(5) PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  logo VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+  id SERIAL PRIMARY KEY,
+  coins VARCHAR(5) REFERENCES coins(id) NOT NULL,
+  total INT NOT NULL,
+  price INT NOT NULL,
+  operation OPERATION NOT NULL,
+  created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS account (
+  id SERIAL PRIMARY KEY,
+  balance INT,
+  updated_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS wallet (
+  id SERIAL PRIMARY KEY,
+  coins VARCHAR(5) REFERENCES coins(id),
+  amount INT NOT NULL,
+  balance INT NOT NULL,
+  updated_at TIMESTAMP NOT NULL
+);

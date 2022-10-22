@@ -1,0 +1,15 @@
+{
+  "$schema": "https://deno.land/x/denon@2.5.0/schema.json",
+  "scripts": {
+    "start": {
+      "cmd": "deno run index.js",
+      "desc": "run my app.ts file",
+      "watch": true,
+      "allow": [
+        "env",
+        "run",
+        "net"
+      ]
+    }
+  }
+}

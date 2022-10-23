@@ -1,9 +1,5 @@
-import { create, list } from "../services/coinsService.js"
+import { list } from "../services/transactionsService.js"
 
-export const coinCreate = async ({ response }) => {
-  response.body = await create()
-}
-
-export const coinsList = async ({ response }) => {
+export const transactionsList = async ({ response }) => {
   response.body = await list()
 }

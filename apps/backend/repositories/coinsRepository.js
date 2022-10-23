@@ -1,9 +1,9 @@
 import client from "../db/database.js"
 
 class CoinsRepository {
-   create(data) {
+   create({ id, name, logo }) {
       return client.queryArray
-         `INSERT INTO coins (id, name, logo, created_at) VALUES (${data.id}, ${data.name}, ${data.logo},${data.create_at})`
+         `INSERT INTO coins (id, name, logo, created_at) VALUES (${id}, ${name}, ${logo}, ${new Date()})`
    }
 
    selectAll() {

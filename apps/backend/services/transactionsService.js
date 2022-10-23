@@ -1,7 +1,7 @@
-import walletRepository from "../repositories/walletRepository.js"
+import TransactionsRepository from "../repositories/TransactionsRepository.js"
 
 export const list = async () => {
-   return await walletRepository.selectAll()
+   return await TransactionsRepository.selectAll()
 }
 
 export const sell = async data => {
@@ -23,7 +23,7 @@ const createOperation = async data => {
       created_at: new Date()
    }
 
-   await walletRepository.create(operation)
+   await TransactionsRepository.create(operation)
 
    return operation
 }

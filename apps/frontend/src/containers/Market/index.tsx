@@ -9,9 +9,7 @@ const Market = () => {
 
 
   useEffect(() => {
-
     const fetchData = async () => {
-      console.log(process.env)
       const data = await fetch(`${process.env.REACT_APP_API_URL}/coins`, {
         method: 'GET' 
       })
@@ -24,13 +22,13 @@ const Market = () => {
 
   }, [])
 
-  const renderCoin = ({ id, name, symbol, logo, price }: CoinProps) => {
+  const renderCoin = ({ id, name, logo, price }: CoinProps) => {
     return (
       <tr key={`crypto-${id}`}>
         <th scope="row">
           <img src={logo} alt={`coin-${name}`} height="36px" /> {name}
         </th>
-        <td>{symbol}</td>
+        <td>{id}</td>
         <td>$ {price}</td>
         <td><button>Comprar</button></td>
         <td><button className="button--sell">Vender</button></td>

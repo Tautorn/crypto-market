@@ -1,6 +1,6 @@
-import coinRepository from "../repositories/coinRepository.js";
+import CoinsRepository from "../repositories/CoinsRepository.js"
 
-export const list = async () => {
+export const listLunar = async () => {
    const data = await fetch(`https://lunarcrush.com/api3/coins/list`, {
       method: 'GET',
       mode: 'cors',
@@ -24,14 +24,30 @@ export const list = async () => {
 }
 
 export const create = async data => {
+   console.log('DATA', data)
    const newCoin = {
       id: String(data.id),
       name: String(data.name),
-      logo: String(data.logo),
-      created_at: new Date()
-   };
+      logo: String(data.logo)
+   }
 
-   await coinRepository.create(newCoin)
+   await CoinsRepository.create(newCoin)
 
-   return newCoin.id
+   return newCoin
+}
+
+export const list = async () => {
+   let response = await CoinsRepository.selectAll()
+
+   response = response.rows.map(beer => {
+      return response.rowDescription.columns.reduce((acc,el, i) => {
+         acc[el.name] = beer[i]
+         acc['price'] = Math.floor(Math.random() * 10000)
+         return acc
+      },{})
+   })
+
+   return {
+      data: response
+   }
 }

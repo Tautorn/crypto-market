@@ -1,4 +1,4 @@
-import { buy, sell, list } from "../services/coinsService.js"
+import { buy, sell, list } from "../services/walletService.js"
 
 export const walletBuy = async ({ response }) => {
   response.body = await buy()

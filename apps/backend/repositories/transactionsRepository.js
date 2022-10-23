@@ -1,28 +1,14 @@
-import client from "../db/database.js";
+import client from "../db/database.js"
 
-class AccountRepository {
-   create(beer) {
+class TransactionsRepository {
+   create({ coin, total, price, operation }) {
       return client.queryArray
-         `INSERT INTO beers (name, brand,is_premium,registration_date) VALUES (${beer.name}, ${beer.brand}, ${beer.is_premium},${beer.registration_date})`;
+         `INSERT INTO transactions (coin, total, price, operation, created_at) VALUES (${coin}, ${total}, ${price},${operation}. ${new Date()})`;
    }
 
    selectAll() {
-      return client.queryArray`SELECT * FROM beers ORDER BY id`;
-   }
-
-   selectById(id) {
-      return client.queryArray`SELECT * FROM beers WHERE id = ${id}`;
-   }
-
-   update(id, beer) {
-      const latestBeer = this.selectById(id);
-
-      return client.queryArray`UPDATE beers SET name = ${beer.name !== undefined ? beer.name : latestBeer.name}, brand = ${beer.brand !== undefined ? beer.brand : latestBeer.brand}, is_premium = ${beer.is_premium !== undefined ? beer.is_premium : latestBeer.is_premium} WHERE id = ${id}`;
-   }
-
-   delete(id) {
-      return client.queryArray`DELETE FROM beers WHERE id = ${id}`;
+      return client.queryArray`SELECT * FROM transactions ORDER BY created_at`;
    }
 }
 
-export default new AccountRepository()
+export default new TransactionsRepository()

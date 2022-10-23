@@ -1,4 +1,4 @@
-import { balance, withdraw, deposit } from "../services/accountService"
+import { balance, withdraw, deposit } from "../services/accountService.js"
 
 export const accountBalance = async ({ response }) => {
   response.body = await balance()

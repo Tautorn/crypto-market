@@ -1,7 +1,20 @@
 import TransactionsRepository from "../repositories/TransactionsRepository.js"
 
 export const list = async () => {
-   return await TransactionsRepository.selectAll()
+   const response = await TransactionsRepository.selectAll()
+   
+   if (response.rows.length > 0) {
+      response = response.rows.map(value => {
+         return response.rowDescription.columns.reduce((acc,el, i) => {
+            acc[el.name] = value[i]
+            return acc
+         },{})
+      })
+   }
+
+   return {
+      data: response
+   }
 }
 
 export const sell = async data => {

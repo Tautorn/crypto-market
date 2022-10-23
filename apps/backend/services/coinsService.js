@@ -24,7 +24,6 @@ export const listLunar = async () => {
 }
 
 export const create = async data => {
-   console.log('DATA', data)
    const newCoin = {
       id: String(data.id),
       name: String(data.name),
@@ -39,9 +38,9 @@ export const create = async data => {
 export const list = async () => {
    let response = await CoinsRepository.selectAll()
 
-   response = response.rows.map(beer => {
+   response = response.rows.map(coin => {
       return response.rowDescription.columns.reduce((acc,el, i) => {
-         acc[el.name] = beer[i]
+         acc[el.name] = coin[i]
          acc['price'] = Math.floor(Math.random() * 10000)
          return acc
       },{})

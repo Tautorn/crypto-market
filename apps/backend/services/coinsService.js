@@ -1,4 +1,6 @@
-export const getCoins = async () => {
+import coinRepository from "../repositories/coinRepository.js";
+
+export const list = async () => {
    const data = await fetch(`https://lunarcrush.com/api3/coins/list`, {
       method: 'GET',
       mode: 'cors',
@@ -19,4 +21,17 @@ export const getCoins = async () => {
    return {
       data: simulatedCoins
    }
+}
+
+export const create = async data => {
+   const newCoin = {
+      id: String(data.id),
+      name: String(data.name),
+      logo: String(data.logo),
+      created_at: new Date()
+   };
+
+   await coinRepository.create(newCoin)
+
+   return newCoin.id
 }

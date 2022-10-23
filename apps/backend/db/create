@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS coins (
 
 CREATE TABLE IF NOT EXISTS transactions (
   id SERIAL PRIMARY KEY,
-  coins VARCHAR(5) REFERENCES coins(id) NOT NULL,
+  coin VARCHAR(5) REFERENCES coins(id) NOT NULL,
   total INT NOT NULL,
   price INT NOT NULL,
   operation OPERATION NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS account (
 
 CREATE TABLE IF NOT EXISTS wallet (
   id SERIAL PRIMARY KEY,
-  coins VARCHAR(5) REFERENCES coins(id),
+  coin VARCHAR(5) REFERENCES coins(id),
   amount INT NOT NULL,
   balance INT NOT NULL,
   updated_at TIMESTAMP NOT NULL

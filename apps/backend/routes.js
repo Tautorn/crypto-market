@@ -1,18 +1,25 @@
 import { Router } from "https://deno.land/x/oak/mod.ts"
 
-import coinsList from "./controllers/coins/coinsList.js"
-import coinCreate from "./controllers/coins/coinCreate.js"
+import {
+  transactionsList
+} from "./controllers/transactions/transactionsController.js"
 
-import transactionsList from "./controllers/transactions/transactionsList.js"
+import {
+  coinCreate,
+  coinsList
+} from "./controllers/coins/coinsController.js"
 
-import walletBuy from "./controllers/wallet/walletBuy.js"
-import walletSell from "./controllers/wallet/walletSell.js"
-import walletList from "./controllers/wallet/walletList.js"
+import {
+  walletBuy,
+  walletSell,
+  walletList
+} from "./controllers/wallet/walletRepository.js"
 
-import accountDeposit from "./controllers/account/accountDeposit.js"
-import accountWithdraw from "./controllers/account/accountWithdraw.js"
-import accountBalance from "./controllers/account/accountBalance.js"
-
+import {
+  accountDeposit,
+  accountBalance,
+  accountWithdraw
+} from "./controllers/account/accountRepository.js"
 
 
 const router = new Router()

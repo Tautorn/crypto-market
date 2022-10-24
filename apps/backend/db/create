@@ -29,3 +29,5 @@ CREATE TABLE IF NOT EXISTS wallet (
   balance INT NOT NULL,
   updated_at TIMESTAMP NOT NULL
 );
+
+INSERT INTO account (balance, updated_at) VALUES (0, current_timestamp);

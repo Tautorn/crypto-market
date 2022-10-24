@@ -18,12 +18,12 @@ export const list = async () => {
 }
 
 export const sell = async data => {
-   createOperation({ ...data, operation: 'sell'})
+   await createOperation({ ...data, operation: 'sell'})
    return data
 }
 
 export const buy = async data => {
-   createOperation({ ...data, operation: 'buy'})
+   await createOperation({ ...data, operation: 'buy'})
    return data
 }
 

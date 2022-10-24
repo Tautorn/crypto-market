@@ -1,11 +1,6 @@
 import client from "../db/database.js"
 
 class AccountRepository {
-   create() {
-      return client.queryArray
-         `INSERT INTO account (balance, updated_at) VALUES (0, ${new Date()})`
-   }
-
    selectAll() {
       return client.queryArray`SELECT * FROM account ORDER BY id`
    }

@@ -1,31 +1,33 @@
 import walletRepository from "../repositories/walletRepository.js"
 
+export const getWallet = async id => {
+   return await walletRepository.selectById(id)
+}
+
 export const list = async () => {
    return await walletRepository.selectAll()
 }
 
-export const buy = async data => {
-   const operation = {
+export const update = async data => {
+   const data = {
       coin: String(data.coin),
       amount: Number(data.amount),
-      balance: data.balance,
-      updated_at: new Date()
+      balance: data.balance
    }
 
-   await walletRepository.create(operation)
+   await walletRepository.update(data)
 
-   return operation
+   return data
 }
 
-export const sell = async data => {
-   const operation = {
+export const create = async data => {
+   const data = {
       coin: String(data.coin),
       amount: Number(data.amount),
-      balance: data.balance,
-      updated_at: new Date()
+      balance: data.balance
    }
 
-   await walletRepository.create(operation)
+   await walletRepository.create(data)
 
-   return operation
+   return data
 }

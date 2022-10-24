@@ -3,7 +3,7 @@ import client from "../db/database.js"
 class TransactionsRepository {
    create({ coin, total, price, operation }) {
       return client.queryArray
-         `INSERT INTO transactions (coin, total, price, operation, created_at) VALUES (${coin}, ${total}, ${price},${operation}. ${new Date()})`;
+         `INSERT INTO transactions (coin, total, price, operation, created_at) VALUES (${coin}, ${total}, ${price},${operation}, current_timestamp)`;
    }
 
    selectAll() {

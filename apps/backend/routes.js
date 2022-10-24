@@ -5,14 +5,13 @@ import {
 } from "./controllers/TransactionsController.js"
 
 import {
-  coinCreate,
+  coinsTrade,
+  coinsCreate,
   coinsList,
   coinsListLunar
 } from "./controllers/CoinsController.js"
 
 import {
-  walletBuy,
-  walletSell,
   walletList
 } from "./controllers/WalletController.js"
 
@@ -28,11 +27,13 @@ const router = new Router()
 router
   .get("/coins/lunar", coinsListLunar)
   .get("/coins", coinsList)
-  .post("/coins", coinCreate)
+  .post("/coins", coinsCreate)  
+  .post("/coins/:id/trade", coinsCreate)
+
   .get("/transactions", transactionsList)
-  .post("/wallet/:id/buy", walletBuy)
-  .post("/wallet/:id/sell", walletSell)
+
   .get("/wallet", walletList)
+
   .post("/account/deposit", accountDeposit)
   .post("/account/withdraw", accountWithdraw)
   .get("/account", accountBalance)

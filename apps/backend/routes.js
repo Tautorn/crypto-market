@@ -1,20 +1,16 @@
 import { Router } from "https://deno.land/x/oak/mod.ts"
 
 import {
+  transactionSell,
+  transactionBuy,
   transactionsList
 } from "./controllers/TransactionsController.js"
 
 import {
-  coinsBuy,
-  coinsSell,
   coinsCreate,
   coinsList,
   coinsListLunar
 } from "./controllers/CoinsController.js"
-
-import {
-  walletList
-} from "./controllers/WalletController.js"
 
 import {
   accountDeposit,
@@ -29,10 +25,9 @@ router
   .get("/coins/lunar", coinsListLunar)
   .get("/coins", coinsList)
   .post("/coins", coinsCreate)  
-  .post("/coins/:id/buy", coinsBuy)
-  .post("/coins/:id/sell", coinsSell)
+  .post("/transactions/:id/buy", transactionBuy)
+  .post("/transactions/:id/sell", transactionSell)
   .get("/transactions", transactionsList)
-  .get("/wallet", walletList)
   .post("/account/deposit", accountDeposit)
   .post("/account/withdraw", accountWithdraw)
   .get("/account", accountBalance)

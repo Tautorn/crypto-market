@@ -6,10 +6,12 @@ export const accountBalance = async ({ response }) => {
 
 export const accountWithdraw = async ({ response, request }) => {
   const { amount } = await request.body().value
+
   response.body = await withdraw(amount)
 }
 
 export const accountDeposit = async ({ response, request }) => {
   const { amount } = await request.body().value
+  
   response.body = await deposit(amount)
 }

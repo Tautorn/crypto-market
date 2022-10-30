@@ -29,6 +29,9 @@ export const createOperation = async ({ coin, total, price, operation }) => {
    }
 
    return {
-      data: dataOperation
+      data: {
+         ...dataOperation,
+         operation
+      }
    }
 }

@@ -7,14 +7,14 @@ class AccountRepository {
 
    updateDeposit(amount) {
       return client.queryArray`
-         update account 
-         set balance = (select sum(balance) from account) + ${amount}, updated_at = ${new Date()}`
+         UPDATE account 
+           SET balance = (SELECT sum(balance) FROM account) + ${amount}, updated_at = current_timestamp}`
    }
 
    updateWithdraw(amount) {
       return client.queryArray`
-         update account 
-         set balance = (select sum(balance) from account) - ${amount}, updated_at = ${new Date()}`
+         UPDATE account 
+           SET balance = (SELECT sum(balance) FROM account) - ${amount}, updated_at = current_timestamp}`
    }
 }
 

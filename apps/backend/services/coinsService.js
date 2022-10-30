@@ -32,7 +32,9 @@ export const create = async data => {
 
    await CoinsRepository.create(newCoin)
 
-   return newCoin
+   return {
+      data: newCoin
+   }
 }
 
 export const list = async () => {

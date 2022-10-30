@@ -1,15 +1,11 @@
 import TransactionsRepository from "../repositories/TransactionsRepository.js"
+import { transformeResponse } from "../helpers/service.js"
 
 export const list = async () => {
    const response = await TransactionsRepository.selectAll()
    
    if (response.rows.length > 0) {
-      response = response.rows.map(value => {
-         return response.rowDescription.columns.reduce((acc,el, i) => {
-            acc[el.name] = value[i]
-            return acc
-         },{})
-      })
+      response = transformeResponse(response)
    }
 
    return {
@@ -17,26 +13,22 @@ export const list = async () => {
    }
 }
 
-export const sell = async data => {
-   await createOperation({ ...data, operation: 'sell'})
-   return data
-}
-
-export const buy = async data => {
-   await createOperation({ ...data, operation: 'buy'})
-   return data
-}
-
-const createOperation = async data => {
-   const operation = {
-      coin: String(data.coin),
-      total: Number(data.total),
-      price: Number(data.price),
-      operation: data.operation,
-      created_at: new Date()
+export const createOperation = async ({ coin, total, price, operation }) => {
+   const dataOperation = {
+      coin: String(coin),
+      total: Number(total),
+      price: Number(price)
    }
 
-   await TransactionsRepository.create(operation)
+   if (operation === 'buy') {
+      await TransactionsRepository.createBuy(dataOperation)
+   }
 
-   return operation
+   if (operation === 'sell') {
+      await TransactionsRepository.createSell(dataOperation)
+   }
+
+   return {
+      data: dataOperation
+   }
 }

@@ -9,25 +9,25 @@ export const list = async () => {
 }
 
 export const update = async data => {
-   const data = {
+   const dataToUpdate = {
       coin: String(data.coin),
       amount: Number(data.amount),
       balance: data.balance
    }
 
-   await walletRepository.update(data)
+   await walletRepository.update(dataToUpdate)
 
    return data
 }
 
 export const create = async data => {
-   const data = {
+   const dataToUpdate = {
       coin: String(data.coin),
       amount: Number(data.amount),
       balance: data.balance
    }
 
-   await walletRepository.create(data)
+   await walletRepository.create(dataToUpdate)
 
    return data
 }

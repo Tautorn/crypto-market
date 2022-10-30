@@ -1,29 +1,28 @@
 import accountRepository from "../repositories/accountRepository.js"
+import { transformeResponse } from "../helpers/service.js"
 
 export const balance = async () => {
-   return await accountRepository.selectAll()
-}
+   let response =  await accountRepository.selectAll()
 
-export const withdraw = async data => {
-   createOperation({ ...data, operation: 'sell'})
-   return data
-}
+   response = transformeResponse(response)
 
-export const deposit = async data => {
-   accountOperation({ ...data, operation: 'buy'})
-   return data
-}
-
-const accountOperation = async data => {
-   const operation = {
-      coin: String(data.coin),
-      total: Number(data.total),
-      price: Number(data.price),
-      operation: data.operation,
-      created_at: new Date()
+   return {
+      data: response
    }
+}
 
-   await accountRepository.create(operation)
+export const deposit = async (amount) => {
+   await accountRepository.updateDeposit(amount)
+   
+   return {
+      msg: `Deposit value $ ${amount} has been completed`
+   }
+}
 
-   return operation
+export const withdraw = async (amount) => {
+   await accountRepository.updateWithdraw(amount)
+   
+   return {
+      msg: `Withdraw value $${amount} has been completed`
+   }
 }

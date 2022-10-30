@@ -2,11 +2,19 @@ import client from "../db/database.js"
 
 class AccountRepository {
    selectAll() {
-      return client.queryArray`SELECT * FROM account ORDER BY id`
+      return client.queryArray`SELECT balance FROM account`
    }
 
-   update(balance) {
-      return client.queryArray`UPDATE account SET balance = ${balance}, updated_at = ${new Date()}`
+   updateDeposit(amount) {
+      return client.queryArray`
+         update account 
+         set balance = (select sum(balance) from account) + ${amount}, updated_at = ${new Date()}`
+   }
+
+   updateWithdraw(amount) {
+      return client.queryArray`
+         update account 
+         set balance = (select sum(balance) from account) - ${amount}, updated_at = ${new Date()}`
    }
 }
 

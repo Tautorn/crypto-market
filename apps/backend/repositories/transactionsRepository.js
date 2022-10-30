@@ -1,9 +1,14 @@
 import client from "../db/database.js"
 
 class TransactionsRepository {
-   create({ coin, total, price, operation }) {
+   createBuy({ coin, total, price }) {
       return client.queryArray
-         `INSERT INTO transactions (coin, total, price, operation, created_at) VALUES (${coin}, ${total}, ${price},${operation}, current_timestamp)`;
+         `INSERT INTO transactions (coin, total, price, operation, created_at) VALUES (${coin}, ${total}, ${price}, 'buy', current_timestamp)`;
+   }
+
+   createSell({ coin, total, price }) {
+      return client.queryArray
+         `INSERT INTO transactions (coin, total, price, operation, created_at) VALUES (${coin}, ${total}, ${price}, 'sell', current_timestamp)`;
    }
 
    selectAll() {

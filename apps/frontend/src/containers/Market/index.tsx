@@ -1,42 +1,97 @@
-import { useEffect, useState } from "react"
-import { Wallket } from "../../components/Wallet"
-import { CoinsProps, CoinProps } from './interfaces'
-import './market.css'
+import { useCallback, useEffect, useState } from "react"
+import { Account } from "../../components/Account"
+import { CoinsProps, CoinProps, OperationProps } from './interfaces'
+import { Transactions } from '../../components/Transactions'
+import RefreshIconPath from '../../assets/refresh.png'
 
 const Market = () => {
   const [coins, setCoins] = useState<CoinsProps>()
-  const [total, setTotal] = useState<number>(0)
+  const [trade, setTrade] = useState([{}])
+
+  const fetchData = useCallback(async () => {
+      const data = await fetch(`${process.env.REACT_APP_API_URL}/coins`)
+      const json = await data.json()
+
+      setCoins(json)
+  }, [])
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch(`${process.env.REACT_APP_API_URL}/coins`, {
-        method: 'GET' 
-      })
-      const json = await data.json()
-      setCoins(json)
-    }
+    fetchData().catch(console.error)
+  }, [fetchData])
 
-    fetchData()
-      .catch(console.error)
-
+  const tradeSetController =  useCallback((id: string, total: string) => {
+    setTrade((prev) => ({
+      ...prev,
+      [String(id)]: Number(total)
+    }))
   }, [])
 
+  const handleChangeTotal = (id: string, total: string) => {
+    tradeSetController(id, total)
+  }
+
+  const handleTransaction = async (id: string, price: number, operation: OperationProps) => {
+    const total = trade[id]
+    const data = {
+      price,
+      total
+    }
+
+    await fetch(`${process.env.REACT_APP_API_URL}/transactions/${id}/${operation}`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data) 
+    })
+    .then(() => {
+      tradeSetController(id, '0')
+    })
+  }
+
   const renderCoin = ({ id, name, logo, price }: CoinProps) => {
+    const disabled = !trade[id]
+
     return (
       <tr key={`crypto-${id}`}>
-        <th scope="row">
-          <img src={logo} alt={`coin-${name}`} height="36px" /> {name}
+        <th>
+          <img src={logo} alt={`coin-${name}`} height="36px" />
+        </th>
+        <th>
+          {name}
         </th>
         <td>{id}</td>
         <td>$ {price}</td>
-        <td><button>Comprar</button></td>
-        <td><button className="button--sell">Vender</button></td>
         <td>
-          <input name="total" type="number" style={{width: "50px"}} placeholder="0" min="0" max="100" />
+          <input
+            onChange={({ target }) => handleChangeTotal(id, target.value )}
+            name={`coin-${name}`}
+            type="number"
+            style={{ width: "50px" }}
+            placeholder="0"
+            min="0"
+            max="100"
+            value={trade[id] || '0'}
+          />
         </td>
         <td>
-          {total}
+          <button
+            disabled={disabled}
+            className="button button--primary"
+            onClick={() => handleTransaction(id, price, OperationProps.buy)}
+          >
+            Comprar
+          </button>
+        </td>
+        <td>
+          <button
+            disabled={disabled}
+            className="button button--secondary"
+            onClick={() => handleTransaction(id, price, OperationProps.sell)}
+          >
+            Vender
+          </button>
         </td>
       </tr>
     )
@@ -45,17 +100,20 @@ const Market = () => {
   return (
     <div className="container">
       <div className="col">
-        <h2>Crypto Market</h2>
+        <div className="content-header">
+          <h2>Crypto Market</h2>
+          <img className="refresh" src={RefreshIconPath} alt="atualizar" onClick={fetchData} />
+        </div>
         <table>
           <thead>
             <tr>
-              <th scope="col">Nome</th>
+              <th scope="col" />
+              <th scope="col">Moeda</th>
               <th scope="col">Símbolo</th>
               <th scope="col">Preço</th>
-              <th scope="col"><a>Comprar</a></th>
-              <th scope="col"><a>Vender</a></th>
-              <th scope="col"><a>Quantidade</a></th>
-              <th scope="col"><a>Total</a></th>
+              <th scope="col">Quantidade</th>
+              <th scope="col">Comprar</th>
+              <th scope="col">Vender</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +122,8 @@ const Market = () => {
         </table>
       </div>
       <div className="col">
-        <Wallket />
+        <Account />
+        <Transactions />
       </div>
     </div>
   )

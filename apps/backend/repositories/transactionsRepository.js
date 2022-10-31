@@ -12,7 +12,7 @@ class TransactionsRepository {
    }
 
    selectAll() {
-      return client.queryArray`SELECT * FROM transactions ORDER BY created_at`;
+      return client.queryArray`SELECT id, coin, total, price, operation, created_at FROM transactions ORDER BY created_at`;
    }
 }
 

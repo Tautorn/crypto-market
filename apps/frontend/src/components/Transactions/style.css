@@ -1,0 +1,18 @@
+.table-transactions {
+  display: block;
+  height: 400px;
+  overflow-y: auto;
+}
+
+.transactions-header {
+  display: flex;
+  align-items: center;
+}
+
+.operation--buy {
+  color: #0000ff;
+}
+
+.operation--sell {
+  color: #ff0000;
+}

@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <header>
-        <img src={logo} alt="logo" width="64px" height="64px" />
+        <img src={logo} alt="logo" width="128px" height="128px" />
       </header>
       <section>
         <Market />

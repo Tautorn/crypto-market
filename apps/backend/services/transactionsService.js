@@ -2,11 +2,9 @@ import TransactionsRepository from "../repositories/TransactionsRepository.js"
 import { transformeResponse } from "../helpers/service.js"
 
 export const list = async () => {
-   const response = await TransactionsRepository.selectAll()
-   
-   if (response.rows.length > 0) {
-      response = transformeResponse(response)
-   }
+   let response = await TransactionsRepository.selectAll()
+
+   response = transformeResponse(response)
 
    return {
       data: response

@@ -2,12 +2,12 @@ import accountRepository from "../repositories/accountRepository.js"
 import { transformeResponse } from "../helpers/service.js"
 
 export const balance = async () => {
-   let response =  await accountRepository.selectAll()
+   let response =  await accountRepository.selectOne()
 
    response = transformeResponse(response)
 
    return {
-      data: response
+      data: response[0]
    }
 }
 

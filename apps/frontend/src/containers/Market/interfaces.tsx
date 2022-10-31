@@ -8,3 +8,8 @@ export interface CoinProps {
 export interface CoinsProps {
   data: [CoinProps]
 }
+
+export enum OperationProps {
+  buy = 'buy',
+  sell = 'sell'
+}
